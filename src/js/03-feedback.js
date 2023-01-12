@@ -97,7 +97,7 @@ function currentTextarea() {
   }
 }
 function inputEmail(evt) {
-    console.log(evt.target.value)
+
   messageInput = evt.target.value
   localStorage.setItem("feedback-form-input", messageInput)
 }

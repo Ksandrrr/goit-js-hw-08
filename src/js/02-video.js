@@ -13,6 +13,6 @@ player.setCurrentTime(Number(localStorage.getItem(`videoplayer-current-time`))).
 // слухач // Відновлення часу відтворення
 player.on('timeupdate', throttle((data) => {
      localStorage.setItem(`videoplayer-current-time`, data.seconds)
-       console.log(Number(localStorage.getItem(`videoplayer-current-time`)))
+       
   }, 1000));
 
