@@ -5,60 +5,44 @@ const refs = {
   form: document.querySelector(`.feedback-form`),
   input: document.querySelector(`input`),
   textarea: document.querySelector(`textarea`),
+  button: document.querySelector(`button`)
 };
 
-refs.form.addEventListener(`submit`, throttle(formSubm,500))
-refs.textarea.addEventListener(`input`, throttle(TeaxareaSave, 500))
-refs.input.addEventListener(`input`, throttle(inputEmail,500))
-
+refs.form.addEventListener(`input`, throttle(form, 500))
+refs.button.addEventListener(`click`, submitForm)
 
 
 let messageStorage = {};
-let saveMessage
-let messageObj;
-
-function formSubm(e) {
-    e.preventDefault()
-    console.log(messageStorage)
-    e.currentTarget.reset()
-    localStorage.clear()
-    messageStorage = {}
-
-}
-function TeaxareaSave(evt) {
+function form(e) {
+  messageStorage[e.target.name]= e.target.value
+  messageStorage[e.target.name] = e.target.value
   localStorage.setItem("feedback-form-state", JSON.stringify(messageStorage))
- saveMessage = localStorage.getItem("feedback-form-state")
- messageObj = JSON.parse(saveMessage)
-  messageStorage.message = evt.target.value
-  if (evt.target.value === ``) {
-    evt.target.value = ``
-  }
-
-}
-function inputEmail(evt) {
-  localStorage.setItem("feedback-form-state", JSON.stringify(messageStorage))
-  saveMessage = localStorage.getItem("feedback-form-state")
-  messageObj = JSON.parse(saveMessage)
-  messageStorage.email = evt.target.value
-if (evt.target.value === ``) {
-    evt.target.value = ``
-  }
-}
-currentTextarea()
-function currentTextarea() {
- const saveMesValue = localStorage.getItem("feedback-form-state")
- const parsMesValue = JSON.parse(saveMesValue)
-  if (parsMesValue) {
-    refs.input.value = parsMesValue.email
-    messageStorage.email = parsMesValue.email
-  } 
   
+}
+currentLocal()
 
-  if (parsMesValue) {
+
+function currentLocal() {
+  const saveMesValue = localStorage.getItem("feedback-form-state")
+  const parsMesValue = JSON.parse(saveMesValue)
+  
+  if (parsMesValue && parsMesValue.email) {
+    refs.input.value = parsMesValue.email
+    
+    messageStorage = parsMesValue
+  } 
+  if (parsMesValue && parsMesValue.message) {
     refs.textarea.value = parsMesValue.message
-    messageStorage.message = parsMesValue.message
+    messageStorage = parsMesValue
   }
+}
+function submitForm(e) {
+
+  e.preventDefault()
+  refs.input.value = ``
+  refs.textarea.value = ``
+  localStorage.clear()
+  console.log(messageStorage)
+  messageStorage = {}
  
 }
-
-
