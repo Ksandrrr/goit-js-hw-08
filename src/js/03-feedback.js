@@ -37,12 +37,14 @@ function currentLocal() {
   }
 }
 function submitForm(e) {
-
   e.preventDefault()
+  if (refs.input.value !== ``&& refs.textarea.value !== ``) {
   refs.input.value = ``
   refs.textarea.value = ``
   localStorage.clear()
   console.log(messageStorage)
   messageStorage = {}
- 
+  }
+
+
 }
